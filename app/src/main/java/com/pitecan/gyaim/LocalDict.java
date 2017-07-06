@@ -175,7 +175,7 @@ class LocalDict {
 
         int patlen = cslength[len];
         int d = (connection != 0 ? connectionLink[connection] : keyLink[keylink]);
-        for (; d >= 0 && Search.ncands < Gyaim.MAXCANDS; d = (connection != 0 ? dict.get(d).connectionLink : dict.get(d).keyLink)) {
+        for (; d >= 0 && Search.ncands < Gyaim.Companion.getMAXCANDS(); d = (connection != 0 ? dict.get(d).connectionLink : dict.get(d).keyLink)) {
             if (searchTask.isCancelled()) break;
             Matcher m = regexp[len].matcher(dict.get(d).pat);
             if (m.find()) {

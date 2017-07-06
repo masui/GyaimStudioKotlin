@@ -47,7 +47,7 @@ public class CandView extends View {
     public CandView(Context context, AttributeSet attrs) {
 	super(context,attrs);
 	// 候補「ボタン」の初期化
-	candButtons = new CandButton[Gyaim.MAXCANDS];
+	candButtons = new CandButton[Gyaim.Companion.getMAXCANDS()];
 	for(int i=0;i<candButtons.length;i++){
 	    CandButton button = new CandButton();
 	    candButtons[i] = button;

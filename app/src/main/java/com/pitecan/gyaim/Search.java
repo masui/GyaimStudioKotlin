@@ -30,7 +30,7 @@ class Search {
     static SQLDict sqlDict;
     private static Gyaim gyaim;
 
-    public static Candidate[] candidates = new Candidate[Gyaim.MAXCANDS];  // 候補単語リスト
+    public static Candidate[] candidates = new Candidate[Gyaim.Companion.getMAXCANDS()];  // 候補単語リスト
     public static int ncands = 0;
     public static boolean useGoogle = true; // GoogleIMEで検索するかどうか
 
@@ -53,7 +53,7 @@ class Search {
         //
         sqlDict = new SQLDict(gyaim);
 
-        for (int i = 0; i < Gyaim.MAXCANDS; i++) {
+        for (int i = 0; i < Gyaim.Companion.getMAXCANDS(); i++) {
             candidates[i] = new Candidate("", "", 0);
         }
     }
@@ -142,7 +142,7 @@ class Search {
     public static void addCandidateWithLevel(String word, String pat, int level) {
         int i;
         //Message.message("Gyaim","addCandidate: word="+word+" pat="+pat+" ncands="+ncands+" level="+level);
-        if (ncands >= Gyaim.MAXCANDS) return;
+        if (ncands >= Gyaim.Companion.getMAXCANDS()) return;
         for (i = 0; i < ncands; i++) {
             if (candidates[i].word == null) break;
             if (candidates[i].word.equals(word)) break;
