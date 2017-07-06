@@ -79,7 +79,7 @@ class Gyaim : InputMethodService() {
         super.onStartInput(attribute, restarting)
 
         val ic = currentInputConnection
-//        ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
+        ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
     }
 
     /**
@@ -131,13 +131,11 @@ class Gyaim : InputMethodService() {
     }
 
     fun commitText(s: String) {
-        val ic = currentInputConnection
-        ic?.commitText(s, 1) // 入力貼り付け
+        currentInputConnection.commitText(s, 1)
     }
 
     fun showComposingText(text: String) {
-        val ic = currentInputConnection
-        ic?.setComposingText(text, 1)
+        currentInputConnection.setComposingText(text, 1)
     }
 
     //
@@ -193,7 +191,7 @@ class Gyaim : InputMethodService() {
             val connManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkInfo = connManager.activeNetworkInfo
             Message.message("Gyaim", "networkInfo = " + networkInfo!!)
-            return networkInfo != null && networkInfo.isConnected
+            return networkInfo.isConnected
         }
 
     fun logWord(word: String) {}
@@ -211,65 +209,65 @@ class Gyaim : InputMethodService() {
     // キャレットの位置を取得する方法?
     //
     // https://stackoverflow.com/questions/4930416/android-edittexts-cursor-coordinates-absolute-position
-//    override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo) {
-//        /*
-//	InputConnection ic = getCurrentInputConnection();
-//	ic.requestCursorUpdates(int cursorUpdateMode)
-//	cursorAnchorInfo.getInsertionMarkerHorizontal() (x)
-//	    and cursorAnchorInfo.getInsertionMarkerTop() (y).
-//	*/
-//        Message.message("Gyaim", "insertionMarkerTop = " + cursorAnchorInfo.insertionMarkerTop) // NaNになることあり
-//        Message.message("Gyaim", "insertionMarkerHorizontal = " + cursorAnchorInfo.insertionMarkerHorizontal) // NaNになることあり
-//
-//        val matrix = cursorAnchorInfo.matrix
-//        val f = FloatArray(9)
-//        matrix.getValues(f)
-//        Log.v("Gyaim", "matrix = " + f[0])
-//        Log.v("Gyaim", "matrix = " + f[1])
-//        Log.v("Gyaim", "matrix = " + f[2])
-//        Log.v("Gyaim", "matrix = " + f[3])
-//        Log.v("Gyaim", "matrix = " + f[4])
-//        Log.v("Gyaim", "matrix = " + f[5])
-//        Log.v("Gyaim", "matrix = " + f[6])
-//        Log.v("Gyaim", "matrix = " + f[7])
-//        Log.v("Gyaim", "matrix = " + f[8])
-//
-//        val loc = IntArray(2)
-//        candView!!.getLocationInWindow(loc)
-//        Log.v("Gyaim", "location x= " + loc[0])
-//        Log.v("Gyaim", "location y= " + loc[1])
-//
-//        val floc = FloatArray(2)
-//        //floc[0] = (float)loc[0];
-//        //floc[1] = (float)loc[1];
-//        floc[0] = 0.0.toFloat()
-//        floc[1] = cursorAnchorInfo.insertionMarkerTop.toFloat()
-//        matrix.mapPoints(floc)
-//        Log.v("Gyaim", "flocation x= " + floc[0])
-//        Log.v("Gyaim", "flocation y= " + floc[1])
-//
-//        val lp = candView!!.layoutParams
-//        val mlp = lp as MarginLayoutParams
-//        //AbsoluteLayoutParams alp = (AbsoluteLayoutParams)lp; こんなのないか
-//        Log.v("Gyaim", "topmargin = " + mlp.topMargin)
-//        Log.v("Gyaim", "bottommargin = " + mlp.bottomMargin)
-//        Log.v("Gyaim", "leftmargin = " + mlp.leftMargin)
-//        Log.v("Gyaim", "rightmargin = " + mlp.rightMargin)
-//
-//        val markerTop = cursorAnchorInfo.insertionMarkerTop.toInt()
-//        var margin: Int
-//        if (java.lang.Float.isNaN(floc[1])) {
-//            margin = 0
-//        } else {
-//            //margin = 1400 - (int)(f[2] + f[5] + markerTop);
-//            margin = 1400 - floc[1].toInt() //  + markerTop);
-//        }
-//        if (margin < 0) margin = 0
-//
-//        mlp.setMargins(mlp.leftMargin, mlp.topMargin, mlp.rightMargin, margin) // これで表示場所を変えられる
-//        //マージンを設定
-//        candView!!.layoutParams = mlp
-//    }
+    override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo) {
+        /*
+      	InputConnection ic = getCurrentInputConnection();
+	ic.requestCursorUpdates(int cursorUpdateMode)
+	cursorAnchorInfo.getInsertionMarkerHorizontal() (x)
+	    and cursorAnchorInfo.getInsertionMarkerTop() (y).
+	*/
+        Message.message("Gyaim", "insertionMarkerTop = " + cursorAnchorInfo.insertionMarkerTop) // NaNになることあり
+        Message.message("Gyaim", "insertionMarkerHorizontal = " + cursorAnchorInfo.insertionMarkerHorizontal) // NaNになることあり
+
+        val matrix = cursorAnchorInfo.matrix
+        val f = FloatArray(9)
+        matrix.getValues(f)
+        Log.v("Gyaim", "matrix = " + f[0])
+        Log.v("Gyaim", "matrix = " + f[1])
+        Log.v("Gyaim", "matrix = " + f[2])
+        Log.v("Gyaim", "matrix = " + f[3])
+        Log.v("Gyaim", "matrix = " + f[4])
+        Log.v("Gyaim", "matrix = " + f[5])
+        Log.v("Gyaim", "matrix = " + f[6])
+        Log.v("Gyaim", "matrix = " + f[7])
+        Log.v("Gyaim", "matrix = " + f[8])
+
+        val loc = IntArray(2)
+        candView!!.getLocationInWindow(loc)
+        Log.v("Gyaim", "location x= " + loc[0])
+        Log.v("Gyaim", "location y= " + loc[1])
+
+        val floc = FloatArray(2)
+        //floc[0] = (float)loc[0];
+        //floc[1] = (float)loc[1];
+        floc[0] = 0.0.toFloat()
+        floc[1] = cursorAnchorInfo.insertionMarkerTop.toFloat()
+        matrix.mapPoints(floc)
+        Log.v("Gyaim", "flocation x= " + floc[0])
+        Log.v("Gyaim", "flocation y= " + floc[1])
+
+        val lp = candView!!.layoutParams
+        val mlp = lp as MarginLayoutParams
+        //AbsoluteLayoutParams alp = (AbsoluteLayoutParams)lp; こんなのないか
+        Log.v("Gyaim", "topmargin = " + mlp.topMargin)
+        Log.v("Gyaim", "bottommargin = " + mlp.bottomMargin)
+        Log.v("Gyaim", "leftmargin = " + mlp.leftMargin)
+        Log.v("Gyaim", "rightmargin = " + mlp.rightMargin)
+
+        val markerTop = cursorAnchorInfo.insertionMarkerTop.toInt()
+        var margin: Int
+        if (java.lang.Float.isNaN(floc[1])) {
+            margin = 0
+        } else {
+            //margin = 1400 - (int)(f[2] + f[5] + markerTop);
+            margin = 1400 - floc[1].toInt() //  + markerTop);
+        }
+        if (margin < 0) margin = 0
+
+        mlp.setMargins(mlp.leftMargin, mlp.topMargin, mlp.rightMargin, margin) // これで表示場所を変えられる
+        //マージンを設定
+        candView!!.layoutParams = mlp
+    }
 
     companion object {
 
