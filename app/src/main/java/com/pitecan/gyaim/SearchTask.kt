@@ -4,7 +4,7 @@ import android.os.AsyncTask
 import android.util.Log
 
 //                                       <Params, Progress, Result> で型を指定する
-class SearchTask(internal var candView: CandView) : AsyncTask<String, Int, Array<Candidate?>>() {
+class SearchTask(internal var candView: CandView?) : AsyncTask<String, Int, Array<Candidate?>>() {
 
     init {
         Message.message("Gyaim", "SearchTask: candView = " + candView)
@@ -65,7 +65,7 @@ class SearchTask(internal var candView: CandView) : AsyncTask<String, Int, Array
             CandView.candPat[i] = ""
             i++
         }
-        candView.drawDefault()
+        candView!!.drawDefault()
     }
 
     protected fun onProgressUpdate(vararg progress: Int) { // Progressの型
