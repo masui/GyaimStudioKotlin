@@ -194,11 +194,11 @@ public class Romakana {
         return s.substring(start, end);
     }
 
-    public static String roma2hiragana(String roma) {
+    static String roma2hiragana(String roma) {
         return roma2kana(roma, true);
     }
 
-    public static String roma2katakana(String roma) {
+    static String roma2katakana(String roma) {
         return roma2kana(roma, false);
     }
 
@@ -210,9 +210,9 @@ public class Romakana {
 
         while (ind < roma.length()) {
             found = false;
-            for (int i = 0; i < RKTABLE.length; i++) {
-                String r = RKTABLE[i][0];
-                String h = (hiragana ? RKTABLE[i][1] : RKTABLE[i][2]);
+            for (String[] aRKTABLE : RKTABLE) {
+                String r = aRKTABLE[0];
+                String h = (hiragana ? aRKTABLE[1] : aRKTABLE[2]);
                 int len = r.length();
                 if (substring(roma, ind, ind + len).equals(r)) {
                     kana += h;
@@ -224,11 +224,11 @@ public class Romakana {
             if (!found) {
                 String r0 = substring(roma, ind, ind + 1);
                 String r1 = substring(roma, ind + 1, ind + 2);
-                if ((r0.equals("n") || r0.equals("N")) && ("bcdfghjklmnpqrstvwxz".indexOf(r1) >= 0)) {
+                if ((r0.equals("n") || r0.equals("N")) && ("bcdfghjklmnpqrstvwxz".contains(r1))) {
                     kana += (hiragana ? "ん" : "ン");
                     ind += 1;
                 } else {
-                    if ("bcdfghjklmpqrstvwxyz".indexOf(r0) >= 0 && r0.equals(r1)) {
+                    if ("bcdfghjklmpqrstvwxyz".contains(r0) && r0.equals(r1)) {
                         kana += (hiragana ? "っ" : "ッ");
                         ind += 1;
                     } else {

@@ -6,7 +6,7 @@ import android.util.Log;
 //                                       <Params, Progress, Result> で型を指定する
 public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 
-    private CandView candView;
+    CandView candView;
 
     public SearchTask(CandView candView) {
         this.candView = candView;
@@ -55,14 +55,14 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
         // Message.message("Gyaim","Search.ncands = " + Search.ncands);
         int i = 0;
         if (Search.ncands > 0) {
-            for (i = 0; i < CandView.candButtons.length && i < Search.ncands; i++) {
-                CandView.candButtons[i].text = Search.candidates[i].word;
-                CandView.candButtons[i].pat = Search.candidates[i].pat;
+            for (i = 0; i < CandView.Companion.getCandText().length && i < Search.ncands; i++) {
+                CandView.Companion.getCandText()[i] = Search.candidates[i].word;
+                CandView.Companion.getCandPat()[i] = Search.candidates[i].pat;
             }
         }
-        for (; i < CandView.candButtons.length; i++) {
-            CandView.candButtons[i].text = "";
-            CandView.candButtons[i].pat = "";
+        for (; i < CandView.Companion.getCandText().length; i++) {
+            CandView.Companion.getCandText()[i] = "";
+            CandView.Companion.getCandPat()[i] = "";
         }
         candView.drawDefault();
     }
