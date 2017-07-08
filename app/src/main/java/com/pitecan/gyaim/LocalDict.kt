@@ -20,7 +20,7 @@ import java.util.Objects
 import java.util.regex.Pattern
 import java.util.regex.Matcher
 
-class LocalDict(`is`: InputStream) {
+class LocalDict(inputStream: InputStream) {
 
     class DictEntry internal constructor(internal var pat: String, internal var word: String, internal var inConnection: Int, internal var outConnection: Int) {
         internal var keyLink: Int = 0
@@ -37,15 +37,15 @@ class LocalDict(`is`: InputStream) {
 
     init {
         try {
-            val `in`: InputStreamReader
-            val br: BufferedReader
+            val inputStreamReader: InputStreamReader
+            val bufferedReader: BufferedReader
 
             var line: String?
 
-            `in` = InputStreamReader(`is`)
-            br = BufferedReader(`in`)
+            inputStreamReader = InputStreamReader(inputStream)
+            bufferedReader = BufferedReader(inputStreamReader)
             while (true) {
-                line = br.readLine()
+                line = bufferedReader.readLine()
                 if (line == null) break
                 // Message.message ("Gyaim",line);
                 val c: Char = line[0].toChar()
@@ -56,8 +56,8 @@ class LocalDict(`is`: InputStream) {
                 // Message.message("Gyaim",a[1]);
                 dict.add(DictEntry(a[0], a[1], Integer.valueOf(a[2])!!, Integer.valueOf(a[3])!!))
             }
-            br.close()
-            `in`.close()
+            bufferedReader.close()
+            inputStreamReader.close()
             // Message.message("Gyaim","" + dict.size());
 
         } catch (e: IOException) {
