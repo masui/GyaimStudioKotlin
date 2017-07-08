@@ -23,7 +23,6 @@ class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val buttonTextSize = 50
     private var buttonTextPaint: Paint? = null
-    // public var candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
 
     companion object {
         var candText = arrayOfNulls<String>(Gyaim.MAXCANDS)
