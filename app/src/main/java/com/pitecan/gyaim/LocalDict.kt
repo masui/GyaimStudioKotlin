@@ -199,18 +199,10 @@ class LocalDict(inputStream: InputStream) {
             if (word[word.length - 1] == '*') return
 
             var p = ""
-            i = 0
-            while (i < level + 1) {
-                p += patStack[i]
-                i++
-            }
+            for (i in 0..level) p += patStack[i]
             p += pat
             var w = ""
-            i = 0
-            while (i < level + 1) {
-                w += wordStack[i]
-                i++
-            }
+            for (i in 0..level) w += wordStack[i]
             w += word
 
             w = w.replace("\\*".toRegex(), "")

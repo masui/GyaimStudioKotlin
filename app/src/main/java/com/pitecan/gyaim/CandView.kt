@@ -19,34 +19,11 @@ import android.view.ViewGroup.LayoutParams
 
 import android.graphics.Typeface
 
-/*
-public class CandButton {
-    public var text: String
-    public var pat: String
-
-    init {
-        text = ""
-        pat = ""
-    }
-}
-*/
-
 class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val buttonTextSize = 50
     private var buttonTextPaint: Paint? = null
     // public var candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
-
-
-    //companion object {
-    //public var candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
-    /*
-    var candButtons: Array<CandButton>
-    // candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
-    candButtons = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
-    */
-    //}
-    //@JvmField static var candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
 
     companion object {
         var candText = arrayOfNulls<String>(Gyaim.MAXCANDS)
@@ -61,7 +38,6 @@ class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             candText[i] = ""
             candPat[i] = ""
         }
-
     }
 
     private fun initGraphics() {
@@ -97,7 +73,6 @@ class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             i++
             // Message.message("Gyaim","text = " + button.text);
         }
-
     }
 
     // よくわからないがこれを設定するとViewの大きさを決められるようだ...
