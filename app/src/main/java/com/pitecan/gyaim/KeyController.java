@@ -14,7 +14,7 @@ class KeyController {
     private static Gyaim gyaim;
     private static CandView candView;
 
-    public static ArrayList<String> inputPatArray; // 入力文字の配列
+    private static ArrayList<String> inputPatArray; // 入力文字の配列
 
     // 状態変数
     public static int nthCandSelected = 0; // 0のときは候補選択前
@@ -40,7 +40,7 @@ class KeyController {
     }
 
     private void searchAndDispCand() {
-        Message.message("Gyaim", "searchAndDispCand()");
+        Message.INSTANCE.message("Gyaim", "searchAndDispCand()");
         //
         // バックグラウンドで検索実行 (AsyncTask機能)
         //
@@ -54,15 +54,15 @@ class KeyController {
 
     private void fix() {
         if (nthCandSelected > 0) { // 候補選択状態
-            String word = Search.candidates[nthCandSelected - 1].word;
+            String word = Search.Companion.getCandidates()[nthCandSelected - 1].getWord();
             gyaim.commitText(word); // 選択単語を貼り付け
-            Search.sqlDict.add(word, inputPat());
-            Search.sqlDict.limit(1000); // 1000個以上になれば古いエントリを消す
+            Search.Companion.getSqlDict().add(word, inputPat());
+            Search.Companion.getSqlDict().limit(1000); // 1000個以上になれば古いエントリを消す
         } else {
             gyaim.commitText(inputPat()); // 入力パタンを貼り付け
         }
         resetInput();
-        Search.reset();
+        Search.Companion.reset();
         candView.invalidate();
         gyaim.setOldClipboardText();
     }
@@ -221,7 +221,7 @@ class KeyController {
                 return false;
             }
             nthCandSelected += 1;
-            gyaim.showComposingText(Search.candidates[nthCandSelected - 1].word);
+            gyaim.showComposingText(Search.Companion.getCandidates()[nthCandSelected - 1].getWord());
             candView.invalidate(); // 候補表示更新
         }
         if (keyCode == KeyEvent.KEYCODE_ENTER) { // 確定
@@ -239,7 +239,7 @@ class KeyController {
 
                 nthCandSelected += 1;
                 //gyaim.showComposingText(Search.candidates[nthCandSelected-1].word);
-                gyaim.showComposingText(Romakana.roma2hiragana(inputPat())); // これは苦しい
+                gyaim.showComposingText(Romakana.Companion.roma2hiragana(inputPat())); // これは苦しい
                 candView.invalidate(); // 候補表示更新
             }
         }
@@ -247,7 +247,7 @@ class KeyController {
             if (nthCandSelected > 0) { // 候補選択状態
                 nthCandSelected -= 1;
                 if (nthCandSelected > 0) {
-                    gyaim.showComposingText(Search.candidates[nthCandSelected - 1].word);
+                    gyaim.showComposingText(Search.Companion.getCandidates()[nthCandSelected - 1].getWord());
                 } else {
                     gyaim.showComposingText(inputPat());
                 }

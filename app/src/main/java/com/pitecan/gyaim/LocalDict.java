@@ -169,13 +169,13 @@ class LocalDict {
     // パタンのlen文字目からのマッチを調べる
     // 接続リンクを深さ優先検索してマッチするものを候補に加えていく
     private static void generateCand(int connection, int keylink, int len, String word, String pat, int level, SearchTask searchTask) {
-        Message.message("Gyaim","GenerateCand("+word+","+pat+","+level+")");
+        Message.INSTANCE.message("Gyaim","GenerateCand("+word+","+pat+","+level+")");
         wordStack[level] = word;
         patStack[level] = pat;
 
         int patlen = cslength[len];
         int d = (connection != 0 ? connectionLink[connection] : keyLink[keylink]);
-        for (; d >= 0 && Search.ncands < Gyaim.Companion.getMAXCANDS(); d = (connection != 0 ? dict.get(d).connectionLink : dict.get(d).keyLink)) {
+        for (; d >= 0 && Search.Companion.getNcands() < Gyaim.Companion.getMAXCANDS(); d = (connection != 0 ? dict.get(d).connectionLink : dict.get(d).keyLink)) {
             if (searchTask.isCancelled()) break;
             Matcher m = regexp[len].matcher(dict.get(d).pat);
             if (m.find()) {
@@ -183,7 +183,7 @@ class LocalDict {
                 if (matchlen == patlen && (!exactMode || exactMode && dict.get(d).pat.length() == matchlen)) { // 最後までマッチ
                     addConnectedCandidate(dict.get(d).word, dict.get(d).pat, dict.get(d).outConnection, level, matchlen);
                     // Message.message("Gyaim","ncands = " + Search.ncands + ", fib1 = " + fib1);
-                    if (Search.ncands >= fib1) {
+                    if (Search.Companion.getNcands() >= fib1) {
                         searchTask.progress(0); //いくつかみつかったら画面更新
                         int tmp = fib1;
                         fib1 += fib2;
@@ -210,7 +210,7 @@ class LocalDict {
         w += word;
 
         w = w.replaceAll("\\*", "");
-        Search.addCandidateWithLevel(w, p, level);
+        Search.Companion.addCandidateWithLevel(w, p, level);
         // Message.message("Gyaim","addCandidateWithLevel: word = " + w + "  pattern = " + p + "  level = " + level);
     }
 

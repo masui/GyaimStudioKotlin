@@ -31,7 +31,7 @@ public class CandButton {
 }
 */
 
-public class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val buttonTextSize = 50
     private var buttonTextPaint: Paint? = null
@@ -39,18 +39,18 @@ public class CandView(context: Context, attrs: AttributeSet) : View(context, att
 
 
     //companion object {
-        //public var candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
-        /*
-        var candButtons: Array<CandButton>
-        // candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
-        candButtons = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
-        */
+    //public var candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
+    /*
+    var candButtons: Array<CandButton>
+    // candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
+    candButtons = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
+    */
     //}
     //@JvmField static var candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
 
-    public companion object {
-        public var candText = arrayOfNulls<String>(Gyaim.MAXCANDS)
-        public var candPat = arrayOfNulls<String>(Gyaim.MAXCANDS)
+    companion object {
+        var candText = arrayOfNulls<String>(Gyaim.MAXCANDS)
+        var candPat = arrayOfNulls<String>(Gyaim.MAXCANDS)
     }
 
     init {
@@ -89,7 +89,7 @@ public class CandView(context: Context, attrs: AttributeSet) : View(context, att
         var i = 0
         while (i < 5 && i < Search.ncands) {
             text = candText[i + KeyController.nthCandSelected]
-            if(text != null) {
+            if (text != null) {
                 textWidth = buttonTextPaint!!.measureText(text)
                 canvas.drawText(text, textPos, 60f, buttonTextPaint!!)
                 textPos += (textWidth + 20.0).toFloat()
@@ -154,14 +154,5 @@ public class CandView(context: Context, attrs: AttributeSet) : View(context, att
 
         //super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
-
-    //companion object {
-    //    public var candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
-    //    /*
-    //    var candButtons: Array<CandButton>
-    //    // candButtons: Array<CandButton?> = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
-    //    candButtons = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
-    //    */
-    //}
 }
 
