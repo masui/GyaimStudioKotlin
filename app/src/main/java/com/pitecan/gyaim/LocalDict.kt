@@ -63,7 +63,7 @@ class LocalDict(inputStream: InputStream) {
         private val regexp = arrayOfNulls<Pattern>(50)       // パタンの部分文字列にマッチするRegExp
         private val cslength = IntArray(50)             // regexp[n]に完全マッチするパタンの長さ
 
-        private val wordStack = Array<String>(20, {""})
+        private val wordStack = Array<String>(20, { "" })
         private val patStack = arrayOfNulls<String>(20)
 
         var exactMode = false
@@ -181,7 +181,6 @@ class LocalDict(inputStream: InputStream) {
         }
 
         fun addConnectedCandidate(word: String, pat: String, connection: Int, level: Int, matchlen: Int) { // 候補追加
-            var i: Int
             if (word == "") return  // 2011/11/3
             //if(word.charAt(0) == '*') return; // 単語活用の途中
             if (word[word.length - 1] == '*') return
@@ -198,24 +197,21 @@ class LocalDict(inputStream: InputStream) {
             // Message.message("Gyaim","addCandidateWithLevel: word = " + w + "  pattern = " + p + "  level = " + level);
         }
 
-        private val patIndPattern = arrayOfNulls<Pattern>(10)
-        private var patIndInitialized = false
+        private val patIndPattern = arrayOf(
+                Pattern.compile("\\[?[aiueoAIUEO].*"),
+                Pattern.compile("\\[?[kg].*"),
+                Pattern.compile("\\[?[sz].*"),
+                Pattern.compile("\\[?[tdT].*"),
+                Pattern.compile("\\[?[n].*"),
+                Pattern.compile("\\[?[hbp].*"),
+                Pattern.compile("\\[?[m].*"),
+                Pattern.compile("\\[?[yY].*"),
+                Pattern.compile("\\[?[r].*")
+        )
 
         fun patInd(str: String): Int {
-            if (!patIndInitialized) {
-                patIndPattern[0] = Pattern.compile("\\[?[aiueoAIUEO].*")
-                patIndPattern[1] = Pattern.compile("\\[?[kg].*")
-                patIndPattern[2] = Pattern.compile("\\[?[sz].*")
-                patIndPattern[3] = Pattern.compile("\\[?[tdT].*")
-                patIndPattern[4] = Pattern.compile("\\[?[n].*")
-                patIndPattern[5] = Pattern.compile("\\[?[hbp].*")
-                patIndPattern[6] = Pattern.compile("\\[?[m].*")
-                patIndPattern[7] = Pattern.compile("\\[?[yY].*")
-                patIndPattern[8] = Pattern.compile("\\[?[r].*")
-                patIndInitialized = true
-            }
-            for (i in 0..8) {
-                val matcher = patIndPattern[i]!!.matcher(str)
+            for (i in patIndPattern.indices) {
+                val matcher = patIndPattern[i].matcher(str)
                 if (matcher.find()) return i
             }
             return 9

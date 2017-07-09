@@ -25,7 +25,7 @@ class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var buttonTextPaint: Paint? = null
 
     companion object {
-        var candText = arrayOfNulls<String>(Gyaim.MAXCANDS)
+        var candText = Array<String?>(Gyaim.MAXCANDS, { "" })
         var candPat = arrayOfNulls<String>(Gyaim.MAXCANDS)
     }
 
