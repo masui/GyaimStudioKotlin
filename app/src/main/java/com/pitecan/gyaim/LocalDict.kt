@@ -19,10 +19,6 @@ class LocalDict(inputStream: InputStream) {
     class DictEntry internal constructor(internal var pat: String, internal var word: String, internal var inConnection: Int, internal var outConnection: Int) {
         internal var keyLink: Int = 0
         internal var connectionLink: Int = 0
-
-        fun word(): String {
-            return word
-        }
     }
 
     public fun dict(): ArrayList<DictEntry> {
