@@ -6,13 +6,7 @@
 //
 package com.pitecan.gyaim
 
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStream
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.FileReader
-import java.io.BufferedReader
+import java.io.*
 
 import java.util.ArrayList
 
@@ -37,13 +31,9 @@ class LocalDict(inputStream: InputStream) {
 
     init {
         try {
-            val inputStreamReader: InputStreamReader
-            val bufferedReader: BufferedReader
-
+            val inputStreamReader: InputStreamReader = InputStreamReader(inputStream)
+            val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
             var line: String?
-
-            inputStreamReader = InputStreamReader(inputStream)
-            bufferedReader = BufferedReader(inputStreamReader)
             while (true) {
                 line = bufferedReader.readLine()
                 if (line == null) break
@@ -73,7 +63,7 @@ class LocalDict(inputStream: InputStream) {
         private val regexp = arrayOfNulls<Pattern>(50)       // パタンの部分文字列にマッチするRegExp
         private val cslength = IntArray(50)             // regexp[n]に完全マッチするパタンの長さ
 
-        private val wordStack = arrayOfNulls<String>(20)
+        private val wordStack = Array<String>(20, {""})
         private val patStack = arrayOfNulls<String>(20)
 
         var exactMode = false
@@ -89,11 +79,9 @@ class LocalDict(inputStream: InputStream) {
             // 先頭読みが同じ単語のリスト
             //
             var cur = IntArray(10)
-            for (i in 0..9) {
-                keyLink[i] = -1
-            }
-            for (i in dict.indices) {
-                if (dict[i].word.startsWith("*")) continue
+            cur.indices.forEach { i -> keyLink[i] = -1 }
+            dict.indices.forEach { i ->
+                if (dict[i].word.startsWith("*")) return@forEach
                 // if(dict[i].inConnection < 1000) continue; // 活用の接続の場合
                 val ind = patInd(dict[i].pat)
                 if (keyLink[ind] < 0) {
@@ -109,10 +97,10 @@ class LocalDict(inputStream: InputStream) {
             // コネクションつながりのリスト
             //
             cur = IntArray(2000)
-            for (i in 0..1999) {
-                connectionLink[i] = -1
-            }
-            for (i in dict.indices) {
+            //(0..1999).forEach { i -> connectionLink[i] = -1 }
+            cur.indices.forEach { i -> connectionLink[i] = -1 }
+
+            dict.indices.forEach { i ->
                 val ind = dict[i].inConnection
                 if (connectionLink[ind] < 0) {
                     cur[ind] = i
@@ -132,7 +120,7 @@ class LocalDict(inputStream: InputStream) {
             var matcher: Matcher
 
             cslength[level] = 0
-            if (pat.length > 0) {
+            if (pat.isNotEmpty()) {
                 re = Pattern.compile("^(\\[[^\\]]+\\])(.*)$")
                 matcher = re.matcher(pat)
                 if (matcher.find()) {
@@ -148,7 +136,7 @@ class LocalDict(inputStream: InputStream) {
                 cslength[level] = cslength[level + 1] + 1
             }
 
-            top += if (p.length > 0) "($p)?" else ""
+            top += if (p.isNotEmpty()) "($p)?" else ""
             regexp[level] = Pattern.compile("^($top)")
             return top
         }

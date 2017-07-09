@@ -1,0 +1,3 @@
+# Android版Gyaim
+
+Kotlinで書き直してみたけれど遅くなった気がする...

@@ -30,9 +30,7 @@ class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     init {
-        // 候補「ボタン」の初期化
-        // candButtons = arrayOfNulls<CandButton>(Gyaim.MAXCANDS)
-
+        // 候補の初期化
         for (i in candText.indices) {
             candText[i] = ""
             candPat[i] = ""

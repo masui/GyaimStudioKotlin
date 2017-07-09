@@ -19,7 +19,7 @@ class SearchTask(internal var candView: CandView?) : AsyncTask<String, Int, Arra
     //
     override fun doInBackground(vararg searchParams: String): Array<Candidate?> { // Result の型を返す 引数はParamsの型
 
-            Message.message("Gyaim", "doInBackground start......")
+        Message.message("Gyaim", "doInBackground start......")
 
         val res: Array<Candidate?>
         val pat = searchParams[0]
@@ -53,7 +53,6 @@ class SearchTask(internal var candView: CandView?) : AsyncTask<String, Int, Arra
         // Message.message("Gyaim","Search.ncands = " + Search.ncands);
         var i = 0
         if (Search.ncands > 0) {
-            i = 0
             while (i < CandView.candText.size && i < Search.ncands) {
                 CandView.candText[i] = Search.candidates[i]!!.word
                 CandView.candPat[i] = Search.candidates[i]!!.pat
@@ -78,8 +77,7 @@ class SearchTask(internal var candView: CandView?) : AsyncTask<String, Int, Arra
     }
 
     override fun onPostExecute(candidates: Array<Candidate?>) { // Result の型の値が引数に入る doInBackgroundの返り値
-
-            Log.v("Gyaim", "onPostExecute")
+        Log.v("Gyaim", "onPostExecute")
         // ここで候補を表示する
         updateView()
     }

@@ -170,12 +170,6 @@ class Gyaim : InputMethodService() {
         return keyController!!.onKeyUp(keyCode, event)
     }
 
-    // こういうものはないようだが
-    //public boolean onTouchEvent(MotionEvent event) {
-    //	Message.message("Gyaim","onTouchEvent - ");
-    //	return false;
-    //}
-
     //
     // ConnectivityManagerというのを使って、ネットが使えるかどうかを判断し、
     // ネットがあるときは常にGoogleIMEを使うようにしてみる

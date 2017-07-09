@@ -1,7 +1,5 @@
 package com.pitecan.gyaim
 
-// class Romakana
-// companion object {
 object Romakana {
     val RKTABLE = arrayOf(
             arrayOf("a", "あ", "ア"),
