@@ -208,7 +208,7 @@ object Romakana {
         var okay = true
         var kana = ""
         var ind = 0
-        var found: Boolean
+        var found = false
 
         while (ind < roma.length) {
             found = false
@@ -228,21 +228,18 @@ object Romakana {
                 val r1 = substring(roma, ind + 1, ind + 2)
                 if ((r0 == "n" || r0 == "N") && "bcdfghjklmnpqrstvwxz".contains(r1)) {
                     kana += if (hiragana) "ん" else "ン"
-                    ind += 1
                 } else {
                     if ("bcdfghjklmpqrstvwxyz".contains(r0) && r0 == r1) {
                         kana += if (hiragana) "っ" else "ッ"
-                        ind += 1
                     } else {
                         if ((r0 == "n" || r0 == "N") && r1 != "") {
                             kana += if (hiragana) "ん" else "ン"
-                            ind += 1
                         } else {
-                            ind += 1
                             okay = false
                         }
                     }
                 }
+                ind += 1
             }
         }
         return kana

@@ -21,12 +21,10 @@ class Search(gyaim: Gyaim) {
         //
         // 内蔵固定辞書
         //
-        //localDict = null;
         try {
-            val `as` = gyaim.resources.assets
-            val `is` = `as`.open("dict.txt")
-            /* localDict = */
-            LocalDict(`is`)
+            val assets = gyaim.resources.assets
+            val inputStream = assets.open("dict.txt")
+            LocalDict(inputStream)
         } catch (e: IOException) {
             //e.printStackTrace();
         }
@@ -134,10 +132,10 @@ class Search(gyaim: Gyaim) {
         }
 
         fun addCandidateWithLevel(word: String?, pat: String?, level: Int) {
-            var i: Int
+            //var i: Int
             //Message.message("Gyaim","addCandidate: word="+word+" pat="+pat+" ncands="+ncands+" level="+level);
             if (ncands >= Gyaim.MAXCANDS) return
-            i = 0
+            var i = 0
             while (i < ncands) {
                 if (candidates[i]!!.word == null) break
                 if (candidates[i]!!.word == word) break

@@ -26,15 +26,7 @@ class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     companion object {
         var candText = Array<String?>(Gyaim.MAXCANDS, { "" })
-        var candPat = arrayOfNulls<String>(Gyaim.MAXCANDS)
-    }
-
-    init {
-        // 候補の初期化
-        for (i in candText.indices) {
-            candText[i] = ""
-            candPat[i] = ""
-        }
+        var candPat = Array<String?>(Gyaim.MAXCANDS, { "" })
     }
 
     private fun initGraphics() {

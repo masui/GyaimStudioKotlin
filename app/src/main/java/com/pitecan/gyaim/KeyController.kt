@@ -11,12 +11,9 @@ import android.text.TextUtils
 
 class KeyController(gyaim: Gyaim, candView: CandView?) {
 
-    private var searchTask: SearchTask? = null
-
     init {
         KeyController.gyaim = gyaim
         KeyController.candView = candView
-        resetInput()
     }
 
     private fun resetInput() {
@@ -100,7 +97,7 @@ class KeyController(gyaim: Gyaim, candView: CandView?) {
                 fix()
             }
 
-            inputPatArray!!.add(s)
+            inputPatArray.add(s)
             gyaim!!.showComposingText(inputPat())
 
             searchAndDispCand()
@@ -140,13 +137,13 @@ class KeyController(gyaim: Gyaim, candView: CandView?) {
                 if (nthCandSelected > 0) { // 候補選択状態だったら確定する
                     fix()
                 }
-                inputPatArray!!.add(c)
+                inputPatArray.add(c)
                 gyaim!!.showComposingText(inputPat())
                 searchAndDispCand()
             }
         }
         if (keyCode == KeyEvent.KEYCODE_SPACE) { // 候補選択
-            if (inputPatArray!!.size == 0) {
+            if (inputPatArray.size == 0) {
                 return false
             }
             nthCandSelected += 1
@@ -154,7 +151,7 @@ class KeyController(gyaim: Gyaim, candView: CandView?) {
             candView!!.invalidate() // 候補表示更新
         }
         if (keyCode == KeyEvent.KEYCODE_ENTER) { // 確定
-            if (inputPatArray!!.size == 0) {
+            if (inputPatArray.size == 0) {
                 return false
             }
             if (nthCandSelected > 0 || exactMode) {
@@ -184,7 +181,7 @@ class KeyController(gyaim: Gyaim, candView: CandView?) {
             } else {
                 val size = inputPatArray!!.size
                 if (size > 0) {
-                    inputPatArray!!.removeAt(size - 1)
+                    inputPatArray.removeAt(size - 1)
                     gyaim!!.showComposingText(inputPat())
                     searchAndDispCand()
                 } else {
@@ -216,14 +213,16 @@ class KeyController(gyaim: Gyaim, candView: CandView?) {
     }
 
     companion object {
-
         private var gyaim: Gyaim? = null
         private var candView: CandView? = null
 
-        private var inputPatArray: ArrayList<String>? = null // 入力文字の配列
+        private var searchTask: SearchTask? = null
+
+        //private var inputPatArray: ArrayList<String>? = null // 入力文字の配列
+        private var inputPatArray = ArrayList<String>()
 
         // 状態変数
-        var nthCandSelected = 0 // 0のときは候補選択前
+        public var nthCandSelected = 0 // 0のときは候補選択前
         private var japaneseInputMode = true
         private var exactMode = false
         private var shift = false

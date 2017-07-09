@@ -21,10 +21,6 @@ class LocalDict(inputStream: InputStream) {
         internal var connectionLink: Int = 0
     }
 
-    public fun dict(): ArrayList<DictEntry> {
-        return dict
-    }
-
     init {
         try {
             val inputStreamReader: InputStreamReader = InputStreamReader(inputStream)
@@ -44,7 +40,6 @@ class LocalDict(inputStream: InputStream) {
             }
             bufferedReader.close()
             inputStreamReader.close()
-            // Message.message("Gyaim","" + dict.size());
 
         } catch (e: IOException) {
             e.printStackTrace()
@@ -60,12 +55,12 @@ class LocalDict(inputStream: InputStream) {
         private val cslength = IntArray(50)             // regexp[n]に完全マッチするパタンの長さ
 
         private val wordStack = Array<String>(20, { "" })
-        private val patStack = arrayOfNulls<String>(20)
+        private val patStack = Array<String>(20, { "" })
 
         var exactMode = false
 
-        private var fib1: Int = 0
-        private var fib2: Int = 0 // フィボナッチ数... なんでこんなの使ってたんだろ?
+        private var fib1 = 0
+        private var fib2 = 0 // フィボナッチ数...
 
         private val dict = ArrayList<DictEntry>()
 
@@ -207,11 +202,9 @@ class LocalDict(inputStream: InputStream) {
 
         fun patInd(str: String): Int {
             for (i in patIndPattern.indices) {
-                val matcher = patIndPattern[i].matcher(str)
-                if (matcher.find()) return i
+                if (patIndPattern[i].matcher(str).find()) return i
             }
             return 9
         }
-
     }
 }
