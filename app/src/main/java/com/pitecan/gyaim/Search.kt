@@ -132,7 +132,6 @@ class Search(gyaim: Gyaim) {
         }
 
         fun addCandidateWithLevel(word: String?, pat: String?, level: Int) {
-            //var i: Int
             //Message.message("Gyaim","addCandidate: word="+word+" pat="+pat+" ncands="+ncands+" level="+level);
             if (ncands >= Gyaim.MAXCANDS) return
             var i = 0

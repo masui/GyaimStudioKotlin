@@ -9,7 +9,7 @@ import android.view.View
 import android.view.KeyEvent
 import android.text.TextUtils
 
-class KeyController(gyaim: Gyaim, candView: CandView?) {
+class KeyController(gyaim: Gyaim, candView: CandView) {
 
     init {
         KeyController.gyaim = gyaim
@@ -214,7 +214,7 @@ class KeyController(gyaim: Gyaim, candView: CandView?) {
 
     companion object {
         private var gyaim: Gyaim? = null
-        private var candView: CandView? = null
+        private lateinit var candView: CandView
 
         private var searchTask: SearchTask? = null
 

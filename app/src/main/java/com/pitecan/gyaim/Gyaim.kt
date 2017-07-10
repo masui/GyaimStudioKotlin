@@ -41,7 +41,7 @@ import android.graphics.Rect
 
 class Gyaim : InputMethodService() {
     //private Keys keys;
-    private var candView: CandView? = null
+    private lateinit var candView: CandView //
 
     private var keyController: KeyController? = null
     private var search: Search? = null

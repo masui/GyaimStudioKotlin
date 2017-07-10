@@ -188,10 +188,12 @@ object Romakana {
             arrayOf("-", "ー", "ー")
     )
 
+    @JvmStatic // これがあるとJavaから Romakana.roma2hiragana() として呼べる
     fun roma2hiragana(roma: String): String {
         return roma2kana(roma, true)
     }
 
+    @JvmStatic
     fun roma2katakana(roma: String): String {
         return roma2kana(roma, false)
     }
