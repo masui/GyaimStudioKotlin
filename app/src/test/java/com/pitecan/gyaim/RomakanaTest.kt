@@ -24,7 +24,14 @@ public class ExampleUnitTest {
 */
 
 class RomakanaTest {
-    internal var testdata = arrayOf(arrayOf("masui", "ますい", "マスイ"), arrayOf("dhisukushisutemu", "でぃすくしすてむ", "ディスクシステム"), arrayOf("dexisukusisutemu", "でぃすくしすてむ", "ディスクシステム"), arrayOf("shachou", "しゃちょう", "シャチョウ"), arrayOf("syatyou", "しゃちょう", "シャチョウ"), arrayOf("vaiorin", "う゛ぁいおりん", "ヴァイオリン"), arrayOf("hannnya", "はんにゃ", "ハンニャ"))
+    internal var testdata = arrayOf(
+            arrayOf("masui", "ますい", "マスイ"),
+            arrayOf("dhisukushisutemu", "でぃすくしすてむ", "ディスクシステム"),
+            arrayOf("dexisukusisutemu", "でぃすくしすてむ", "ディスクシステム"),
+            arrayOf("shachou", "しゃちょう", "シャチョウ"),
+            arrayOf("syatyou", "しゃちょう", "シャチョウ"),
+            arrayOf("vaiorin", "う゛ぁいおりん", "ヴァイオリン"),
+            arrayOf("hannnya", "はんにゃ", "ハンニャ"))
 
     @Test
     @Throws(Exception::class)
