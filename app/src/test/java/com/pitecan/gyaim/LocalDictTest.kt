@@ -1,19 +1,14 @@
 //
 // ローカル辞書検索のテスト
 //
-// * JUnit 4.12を利用
-//   - @Test というアノテーションをつけるとテスト関数と解釈される
-//   - assertThat() みたいなのが使える
-// * 日本語でわかりやすくしてみたり
+// - @Test というアノテーションをつけるとテスト関数と解釈される
+// - assertThat() みたいなのが使える
 //
 package com.pitecan.gyaim
 
 import org.junit.Test
 
 import org.junit.Assert.*
-
-//import static org.hamcrest.MatcherAssert.assertThat;
-//import static org.hamcrest.Matchers.*;
 
 import com.pitecan.gyaim.LocalDict
 import com.pitecan.gyaim.SearchTask
@@ -28,14 +23,12 @@ class LocalDictTest {
     init {
         val file = File(単語辞書ファイル)
         try {
-            val `is` = FileInputStream(file)
-            //localDict = new LocalDict(is);
-            LocalDict.setInputStream(`is`)
+            val inputStream = FileInputStream(file)
+            LocalDict.setInputStream(inputStream)
         } catch (e: IOException) {
             println("辞書読出し失敗")
             e.printStackTrace()
         }
-
     }
 
     @Test
@@ -51,7 +44,6 @@ class LocalDictTest {
             for (entry in LocalDict.dict()) {
                 if (entry.word() == 単語) 登録されてる = true
             }
-            //assertThat(登録されてる, is(true));
             assertTrue(登録されてる)
         }
     }

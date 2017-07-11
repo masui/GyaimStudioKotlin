@@ -1,5 +1,5 @@
 //
-// LocalDict.javaテストのためのダミー
+// LocalDict.ktテストのためのダミー
 //
 
 package com.pitecan.gyaim
