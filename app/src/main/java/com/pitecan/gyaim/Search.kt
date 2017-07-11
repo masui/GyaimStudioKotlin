@@ -24,7 +24,7 @@ class Search(gyaim: Gyaim) {
         try {
             val assets = gyaim.resources.assets
             val inputStream = assets.open("dict.txt")
-            LocalDict(inputStream)
+            LocalDict.setInputStream(inputStream)
         } catch (e: IOException) {
             //e.printStackTrace();
         }
