@@ -1,3 +1,8 @@
+//
+// ローマ字かな変換のユニットテスト
+//
+// ここはJavaで書く必要があるのだろうか 2017/07/11 08:56:02
+//
 package com.pitecan.gyaim;
 
 import org.junit.Test;
@@ -18,7 +23,7 @@ public class ExampleUnitTest {
 }
 */
 
-public class ExampleUnitTest {
+public class RomakanaTest {
     String testdata[][] = {
             {"masui", "ますい", "マスイ"},
             {"dhisukushisutemu", "でぃすくしすてむ", "ディスクシステム"},
@@ -27,7 +32,7 @@ public class ExampleUnitTest {
     };
 
     @Test
-    public void ローマ字変換テスト() {
+    public void ローマ字変換テスト() throws Exception {
         for (String[] data : testdata) {
             assertTrue(Romakana.roma2hiragana(data[0]).equals(data[1]));
             assertTrue(Romakana.roma2katakana(data[0]).equals(data[2]));
