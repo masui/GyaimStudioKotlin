@@ -27,6 +27,8 @@ object LocalDict {
 
     private var inputStream: InputStream? = null
 
+    private val asterpat = "\\*".toRegex()
+
     @JvmStatic
     fun initWithInputStream(inputStream: InputStream) {
         LocalDict.inputStream = inputStream
@@ -185,7 +187,10 @@ object LocalDict {
         var p = patStack.take(level+1).joinToString("") + pat
         var w = wordStack.take(level+1).joinToString("") + word
 
-        w = w.replace("\\*".toRegex(), "")
+        //w = w.replace("\\*".toRegex(), "")
+        w = w.replace("*", "")
+        // w = w.replace(asterpat, "")
+
         Search.addCandidateWithLevel(w, p, level)
         // Message.message("Gyaim","addCandidateWithLevel: word = " + w + "  pattern = " + p + "  level = " + level);
     }

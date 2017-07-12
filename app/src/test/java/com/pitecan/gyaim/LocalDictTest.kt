@@ -22,8 +22,7 @@ import java.io.IOException
 class LocalDictTest {
 
     companion object {
-        // この絶対パスをなんとかしたいのだが...
-        internal val 単語辞書ファイル = "/Users/masui/Gyaim/app/src/main/assets/dict.txt"
+        internal val 単語辞書ファイル = "app/src/main/assets/dict.txt"
     }
 
     init {
@@ -66,7 +65,9 @@ class LocalDictTest {
                 arrayOf("kangae", "考える"),
                 arrayOf("atarashii", "新しい"),
                 arrayOf("masui", "増井"),
-                arrayOf("toukyoue", "東京駅")
+                arrayOf("toukyoue", "東京駅"),
+                arrayOf("sanjuusan", "三十三"),
+                arrayOf("taberarenai", "食べられない")
         )
         for (変換例 in 変換例リスト) {
             LocalDict.search(変換例[0], SearchTask())
