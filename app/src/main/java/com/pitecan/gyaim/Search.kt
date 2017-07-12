@@ -106,7 +106,7 @@ class Search(gyaim: Gyaim) {
                     if (gyaim!!.isConnected!!) {
                         // 昔はGoogleSuggestを使っていたが制限があるようなのでGoogleIME APIを利用する
                         // String[] suggestions = GoogleSuggest.suggest(word);
-                        var suggestions = GoogleIME.ime(Romakana.roma2hiragana(pat))
+                        var suggestions = GoogleIME.convert(Romakana.roma2hiragana(pat))
                         Log.v("Gyaim", "length=" + suggestions.size)
                         var i = 0
                         while (suggestions[i] != null && suggestions[i] !== "") {
