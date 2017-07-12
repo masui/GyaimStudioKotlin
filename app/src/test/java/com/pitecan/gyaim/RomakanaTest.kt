@@ -8,7 +8,7 @@ import org.junit.Test
 import org.junit.Assert.*
 
 class RomakanaTest {
-    internal var testdata = arrayOf(
+    val 変換例リスト = arrayOf(
             arrayOf("masui", "ますい", "マスイ"),
             arrayOf("dhisukushisutemu", "でぃすくしすてむ", "ディスクシステム"),
             arrayOf("dexisukusisutemu", "でぃすくしすてむ", "ディスクシステム"),
@@ -19,9 +19,9 @@ class RomakanaTest {
 
     @Test
     fun ローマ字変換テスト() {
-        for (data in testdata) {
-            assertTrue(Romakana.roma2hiragana(data[0]) == data[1])
-            assertTrue(Romakana.roma2katakana(data[0]) == data[2])
+        for (変換例 in 変換例リスト) {
+            assertTrue(Romakana.roma2hiragana(変換例[0]) == 変換例[1])
+            assertTrue(Romakana.roma2katakana(変換例[0]) == 変換例[2])
         }
     }
 }

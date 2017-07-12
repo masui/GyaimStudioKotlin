@@ -91,7 +91,7 @@ object GoogleIME {
                     i++
                 }
             } catch (e: JSONException) {
-                Message.message("Gyaim", "JSON Exception " + e)
+                Message.message("Gyaim", "JSON Exception $e")
             }
         } catch (e: Exception) {
             Message.message("Gyaim", "GoogleIME error $e")

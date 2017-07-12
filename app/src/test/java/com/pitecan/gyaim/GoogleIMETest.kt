@@ -10,23 +10,19 @@ import org.junit.Assert.*
 import com.pitecan.gyaim.GoogleIME
 
 class GoogleIMETest {
-    @Test
-    fun 普通単語検索チェック() {
-        var words = arrayOf("")
-        words = GoogleIME.convert("べんきょう")
-        assertTrue(words.contains("勉強"))
-    }
+    val 変換例リスト = arrayOf(
+            arrayOf("べんきょう", "勉強"),
+            arrayOf("ますい", "増井"),
+            arrayOf("いちのもと", "櫟本"),
+            arrayOf("むさしぼうべんけい","武蔵坊弁慶"),
+            arrayOf("かまくらのかいがん", "鎌倉の海岸")
+            )
 
     @Test
-    fun 特殊地名検索チェック() {
-        var words = GoogleIME.convert("いちのもと")
-        assertTrue(words.contains("櫟本"))
-    }
-
-    @Test
-    fun 連文節変換チェック() {
-        var words = GoogleIME.convert("かまくらのかいがん")
-        assertTrue(words.contains("鎌倉の海岸"))
+    fun Google変換チェック() {
+        for (変換例 in 変換例リスト) {
+            assertTrue(GoogleIME.convert(変換例[0]).contains(変換例[1]))
+        }
     }
 }
 
