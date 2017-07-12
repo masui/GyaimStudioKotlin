@@ -30,7 +30,7 @@ class LocalDictTest {
         val file = File(単語辞書ファイル)
         try {
             val inputStream = FileInputStream(file)
-            LocalDict.setInputStream(inputStream)
+            LocalDict.initWithInputStream(inputStream)
         } catch (e: IOException) {
             println("辞書読出し失敗")
             e.printStackTrace()
@@ -39,7 +39,7 @@ class LocalDictTest {
 
     @Test
     fun 辞書サイズチェック() {
-        assertTrue(LocalDict.dict().size > 10000)
+        assertTrue(LocalDict.dict.size > 10000)
     }
 
     @Test
@@ -53,8 +53,8 @@ class LocalDictTest {
         )
         for (重要単語 in 重要単語リスト) {
             var registered = false
-            for (entry in LocalDict.dict()) {
-                if (entry.word() == 重要単語) registered = true
+            for (entry in LocalDict.dict) {
+                if (entry.word == 重要単語) registered = true
             }
             assertTrue(registered)
         }

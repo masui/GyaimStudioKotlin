@@ -1,7 +1,7 @@
 package com.pitecan.gyaim
 
 object Romakana {
-    val RKTABLE = arrayOf(
+    private val RKTABLE = arrayOf(
             arrayOf("a", "あ", "ア"),
             arrayOf("ba", "ば", "バ"),
             arrayOf("be", "べ", "ベ"),
@@ -198,7 +198,7 @@ object Romakana {
         return roma2kana(roma, false)
     }
 
-    fun substring(s: String, start: Int, end: Int): String {
+    private fun substring(s: String, start: Int, end: Int): String {
         val len = s.length
         if (start < 0 || start >= len) return ""
         if (end < start || end > len) return ""
@@ -206,7 +206,7 @@ object Romakana {
     }
 
 
-    fun roma2kana(roma: String, hiragana: Boolean): String {
+    private fun roma2kana(roma: String, hiragana: Boolean): String {
         var okay = true
         var kana = ""
         var ind = 0

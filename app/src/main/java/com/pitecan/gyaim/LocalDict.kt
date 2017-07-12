@@ -21,10 +21,6 @@ public class DictEntry internal constructor(pat: String, word: String, internal 
 
     internal var keyLink: Int = 0
     internal var connectionLink: Int = 0
-
-    fun word(): String {
-        return word
-    }
 }
 
 object LocalDict {
@@ -32,7 +28,7 @@ object LocalDict {
     private var inputStream: InputStream? = null
 
     @JvmStatic
-    fun setInputStream(inputStream: InputStream) {
+    fun initWithInputStream(inputStream: InputStream) {
         LocalDict.inputStream = inputStream
 
         try {
@@ -43,11 +39,10 @@ object LocalDict {
                 line = bufferedReader.readLine()
                 if (line == null) break
                 //Message.message ("Gyaim",line);
-                val c: Char = line[0].toChar()
+                val c = line[0].toChar()
                 if (c == '#' || c == ' ' || c == '\t') continue // コメント行
                 val a = line.split("\t".toRegex(), 4).toTypedArray()
-                if (a[3] == null || a[3].equals("") || a[3].length == 0 || "" + a[3] === "")
-                    a[3] = "0"
+                if (a[3] == null || a[3] == "") a[3] = "0"
                 //Message.message("Gyaim",a[1]);
                 dict.add(DictEntry(a[0], a[1], Integer.valueOf(a[2])!!, Integer.valueOf(a[3])!!))
             }
@@ -74,12 +69,7 @@ object LocalDict {
     private var fib1 = 0
     private var fib2 = 0 // フィボナッチ数...
 
-    private val dict = ArrayList<DictEntry>()
-
-    @JvmStatic
-    public fun dict(): ArrayList<DictEntry> {
-        return dict
-    }
+    public val dict = ArrayList<DictEntry>()
 
     private fun initLink() {
         // Message.message("Gyaim","initLink");
@@ -192,13 +182,8 @@ object LocalDict {
         if (word == "") return  // 2011/11/3
         //if(word.charAt(0) == '*') return; // 単語活用の途中
         if (word[word.length - 1] == '*') return
-
-        var p = ""
-        for (i in 0..level) p += patStack[i]
-        p += pat
-        var w = ""
-        for (i in 0..level) w += wordStack[i]
-        w += word
+        var p = patStack.take(level+1).joinToString("") + pat
+        var w = wordStack.take(level+1).joinToString("") + word
 
         w = w.replace("\\*".toRegex(), "")
         Search.addCandidateWithLevel(w, p, level)

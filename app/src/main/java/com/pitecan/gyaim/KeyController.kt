@@ -37,8 +37,8 @@ class KeyController(gyaim: Gyaim, candView: CandView?) {
         if (nthCandSelected > 0) { // 候補選択状態
             val word = Search.candidates[nthCandSelected - 1]!!.word
             gyaim!!.commitText(word!!) // 選択単語を貼り付け
-            Search.sqlDict!!.add(word, inputPat())
-            Search.sqlDict!!.limit(1000) // 1000個以上になれば古いエントリを消す
+            SQLDict.add(word, inputPat())
+            SQLDict.limit(1000) // 1000個以上になれば古いエントリを消す
         } else {
             gyaim!!.commitText(inputPat()) // 入力パタンを貼り付け
         }

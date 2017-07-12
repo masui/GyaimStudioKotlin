@@ -24,7 +24,7 @@ class Search(gyaim: Gyaim) {
         try {
             val assets = gyaim.resources.assets
             val inputStream = assets.open("dict.txt")
-            LocalDict.setInputStream(inputStream)
+            LocalDict.initWithInputStream(inputStream)
         } catch (e: IOException) {
             //e.printStackTrace();
         }
@@ -32,7 +32,8 @@ class Search(gyaim: Gyaim) {
         //
         // 学習辞書(SQL)
         //
-        sqlDict = SQLDict(gyaim)
+        SQLDict.initWithContext(gyaim)
+        // sqlDict = SQLDict(gyaim)
 
         for (i in 0..Gyaim.MAXCANDS - 1) {
             candidates[i] = Candidate("", "", 0)
@@ -41,7 +42,7 @@ class Search(gyaim: Gyaim) {
 
     companion object {
         //private static LocalDict localDict;
-        var sqlDict: SQLDict? = null
+        // var sqlDict: SQLDict? = null
         private var gyaim: Gyaim? = null
 
         var candidates: Array<Candidate?> = arrayOfNulls<Candidate>(Gyaim.MAXCANDS)  // 候補単語リスト
@@ -82,7 +83,7 @@ class Search(gyaim: Gyaim) {
             //
             // SQLの学習辞書検索
             //
-            val s = sqlDict!!.match(pat, LocalDict.exactMode)
+            val s = SQLDict.match(pat, LocalDict.exactMode)
             for (k in s.indices) {
                 addCandidateWithLevel(s[k][0], s[k][1], -50 + k)
             }

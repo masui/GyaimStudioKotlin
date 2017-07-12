@@ -51,21 +51,21 @@ internal class DBHelper(context: Context) : SQLiteOpenHelper(context, "learndict
     }
 }
 
-class SQLDict(context: Context) {
-    internal var db: SQLiteDatabase
+object SQLDict {
+    internal var db: SQLiteDatabase? = null
 
-    init {
+    fun initWithContext(context: Context) {
         val helper = DBHelper(context)
         db = helper.writableDatabase
     }
 
     fun add(word: String, pat: String) { // エントリ追加
         // 最初に全部消す
-        db.delete("history", "word = '$word' AND pat = '$pat'", null)
+        db!!.delete("history", "word = '$word' AND pat = '$pat'", null)
         val patind = LocalDict.patInd(pat)
         // SQLite3の日付処理
         // http://www.tamandua-webtools.net/sqlite3-date.html
-        db.execSQL("insert into history(word,pat,patind,date) values ('$word', '$pat', $patind, datetime('now', 'localtime'));")
+        db!!.execSQL("insert into history(word,pat,patind,date) values ('$word', '$pat', $patind, datetime('now', 'localtime'));")
     }
 
     fun limit(max: Int) { // max個までにDBを制限する
@@ -73,14 +73,14 @@ class SQLDict(context: Context) {
         val cursor: Cursor
         var word: String
         var pat: String
-        cursor = db.query("history", arrayOf("word", "pat", "patind", "date"), null, null, null, null, "date desc")
+        cursor = db!!.query("history", arrayOf("word", "pat", "patind", "date"), null, null, null, null, "date desc")
         val count = cursor.count
         while (max < count) {
             cursor.moveToPosition(max)
             word = cursor.getString(0)
             pat = cursor.getString(1)
             //Log.v("SQLite","delete -> " + word);
-            db.delete("history", "word = '$word' AND pat = '$pat'", null)
+            db!!.delete("history", "word = '$word' AND pat = '$pat'", null)
             max++
         }
         cursor.close()
@@ -92,7 +92,7 @@ class SQLDict(context: Context) {
         val pattern = if (exactMode) Pattern.compile("^" + pat) else Pattern.compile("^$pat.*")
         //Log.v("Gyaim","pattern="+pattern);
 
-        val cursor = db.query("history", arrayOf("word", "pat", "date"),
+        val cursor = db!!.query("history", arrayOf("word", "pat", "date"),
                 "patind = " + LocalDict.patInd(pat), null, null, null, "date desc")
         var isEof = cursor.moveToFirst()
         while (isEof) {
