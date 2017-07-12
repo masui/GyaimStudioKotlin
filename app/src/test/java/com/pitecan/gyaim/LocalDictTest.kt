@@ -20,6 +20,12 @@ import java.io.InputStream
 import java.io.IOException
 
 class LocalDictTest {
+
+    companion object {
+        // この絶対パスをなんとかしたいのだが...
+        internal val 単語辞書ファイル = "/Users/masui/Gyaim/app/src/main/assets/dict.txt"
+    }
+
     init {
         val file = File(単語辞書ファイル)
         try {
@@ -32,42 +38,43 @@ class LocalDictTest {
     }
 
     @Test
-    fun 単語辞書のサイズが充分大きい() {
+    fun 辞書サイズチェック() {
         assertTrue(LocalDict.dict().size > 10000)
     }
 
     @Test
-    fun 単語登録チェック() {
-        val 必須単語 = arrayOf("漢字", "東京", "増井", "料理")
-        for (単語 in 必須単語) {
-            var 登録されてる = false
+    fun 重要単語登録チェック() {
+        val 重要単語リスト = arrayOf(
+                "漢字",
+                "東京",
+                "増井",
+                "料理",
+                "勉強"
+        )
+        for (重要単語 in 重要単語リスト) {
+            var registered = false
             for (entry in LocalDict.dict()) {
-                if (entry.word() == 単語) 登録されてる = true
+                if (entry.word() == 重要単語) registered = true
             }
-            assertTrue(登録されてる)
+            assertTrue(registered)
         }
     }
 
     @Test
-    fun 検索テスト() {
-        LocalDict.search("kangae", SearchTask())
-        assertTrue(Search.words.size > 0)
-        var 考えるが検索された = false
-        for (word in Search.words) {
-            if (word == "考える") 考えるが検索された = true
+    fun 変換チェック() {
+        val 変換例リスト = arrayOf(
+                arrayOf("kangae", "考える"),
+                arrayOf("atarashii", "新しい"),
+                arrayOf("masui", "増井"),
+                arrayOf("toukyoue", "東京駅")
+        )
+        for (変換例 in 変換例リスト) {
+            var found = false
+            LocalDict.search(変換例[0], SearchTask())
+            for (変換結果 in Search.words) {
+                if (変換結果 == 変換例[1]) found = true
+            }
+            assertTrue(found)
         }
-        assertTrue(考えるが検索された)
-
-        LocalDict.search("atarashii", SearchTask())
-        assertTrue(Search.words.size > 0)
-        var 新しいが検索された = false
-        for (word in Search.words) {
-            if (word == "新しい") 新しいが検索された = true
-        }
-        assertTrue(新しいが検索された)
-    }
-
-    companion object {
-        internal val 単語辞書ファイル = "/Users/masui/Gyaim/app/src/main/assets/dict.txt"
     }
 }

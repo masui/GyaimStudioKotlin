@@ -105,7 +105,6 @@ object LocalDict {
         // コネクションつながりのリスト
         //
         cur = IntArray(2000)
-        //(0..1999).forEach { i -> connectionLink[i] = -1 }
         cur.indices.forEach { i -> connectionLink[i] = -1 }
 
         dict.indices.forEach { i ->

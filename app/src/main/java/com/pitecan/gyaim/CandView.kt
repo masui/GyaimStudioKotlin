@@ -72,7 +72,7 @@ class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         Log.v("Gyaim", "onMeasure: width = $width height = $height")
 
-        setMeasuredDimension(1200, 100)
+        setMeasuredDimension(1200, 100) // KEYOne用にいい加減に設定
         /*
     LayoutParams lp = getLayoutParams();
 	MarginLayoutParams mlp = (MarginLayoutParams)lp;

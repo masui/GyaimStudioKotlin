@@ -20,7 +20,7 @@ import org.apache.http.util.EntityUtils
 class GoogleIME {
     companion object {
 
-        fun ime(q: String): Array<String?> {
+        fun ime(q: String): Array<String> {
             // Google CGI API for Japanese Input
             // http://www.google.co.jp/ime/cgiapi.html
             // Google日本語入力のURLは "http://google.co.jp/transliterate?langpair=ja-Hira|ja&text=かんじ" のような形式だが
@@ -28,10 +28,14 @@ class GoogleIME {
             val urlstr = "http://google.co.jp/transliterate?langpair=ja-Hira%7cja&text=" + q
             //val suggestions: Array<String>
             val maxSuggestions = 20
+            /*
             var suggestions = arrayOfNulls<String>(maxSuggestions + 1)
             for (i in suggestions.indices) {
                 suggestions[i] = ""
             }
+            */
+            var suggestions = Array<String>(maxSuggestions + 1, { "" })
+
             var nsuggest = 0
 
             var jsonText = "[[\"\",[]]]"

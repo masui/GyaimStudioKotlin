@@ -41,7 +41,8 @@ import android.graphics.Rect
 
 class Gyaim : InputMethodService() {
     //private Keys keys;
-    private lateinit var candView: CandView //
+    //private lateinit var candView: CandView //
+    private var candView: CandView? = null
 
     private var keyController: KeyController? = null
     private var search: Search? = null
@@ -98,14 +99,14 @@ class Gyaim : InputMethodService() {
 
         val dummyCandView = layoutInflater.inflate(R.layout.candidate, null) as CandView
 
-        Log.v("Gyaim", "CANDVIEW = " + candView)
+        // Log.v("Gyaim", "CANDVIEW = " + candView)
 
         // candView.setY(100);
         // candView.setTop(100);
 
         // setCandidatesViewShown(true); // これが無いと表示されない
 
-        keyController = KeyController(this, candView) // この場所?
+        // keyController = KeyController(this, candView) // この場所?
 
         return candView
     }
@@ -225,6 +226,8 @@ class Gyaim : InputMethodService() {
         Log.v("Gyaim", "matrix = " + f[6])
         Log.v("Gyaim", "matrix = " + f[7])
         Log.v("Gyaim", "matrix = " + f[8])
+
+        if (candView == null) return
 
         val loc = IntArray(2)
         candView!!.getLocationInWindow(loc)
