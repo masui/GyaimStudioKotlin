@@ -69,12 +69,8 @@ class LocalDictTest {
                 arrayOf("toukyoue", "東京駅")
         )
         for (変換例 in 変換例リスト) {
-            var found = false
             LocalDict.search(変換例[0], SearchTask())
-            for (変換結果 in Search.words) {
-                if (変換結果 == 変換例[1]) found = true
-            }
-            assertTrue(found)
+            assertTrue(Search.words.contains(変換例[1]))
         }
     }
 }
