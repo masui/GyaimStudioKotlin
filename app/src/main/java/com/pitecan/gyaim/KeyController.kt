@@ -7,7 +7,6 @@ import java.util.ArrayList
 
 import android.view.View
 import android.view.KeyEvent
-import android.text.TextUtils
 
 class KeyController(gyaim: Gyaim, candView: CandView?) {
 
@@ -25,7 +24,7 @@ class KeyController(gyaim: Gyaim, candView: CandView?) {
     }
 
     private fun searchAndDispCand() {
-        Message.message("Gyaim", "searchAndDispCand()")
+        //Message.message("Gyaim", "searchAndDispCand()")
         //
         // バックグラウンドで検索実行 (AsyncTask機能)
         //
@@ -215,10 +214,8 @@ class KeyController(gyaim: Gyaim, candView: CandView?) {
     companion object {
         private var gyaim: Gyaim? = null
         private var candView: CandView? = null
-
         private var searchTask: SearchTask? = null
 
-        //private var inputPatArray: ArrayList<String>? = null // 入力文字の配列
         private var inputPatArray = ArrayList<String>()
 
         // 状態変数
@@ -229,7 +226,7 @@ class KeyController(gyaim: Gyaim, candView: CandView?) {
         private var alt = false
 
         fun inputPat(): String {
-            return TextUtils.join("", inputPatArray)
+            return inputPatArray.joinToString("")
         }
     }
 }

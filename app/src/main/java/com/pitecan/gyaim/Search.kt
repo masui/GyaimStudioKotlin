@@ -24,7 +24,8 @@ class Search(gyaim: Gyaim) {
         try {
             val assets = gyaim.resources.assets
             val inputStream = assets.open("dict.txt")
-            LocalDict.initWithInputStream(inputStream)
+            //LocalDict.initWithInputStream(inputStream)
+            LocalDict(inputStream)
         } catch (e: IOException) {
             //e.printStackTrace();
         }
@@ -32,8 +33,7 @@ class Search(gyaim: Gyaim) {
         //
         // 学習辞書(SQL)
         //
-        SQLDict.initWithContext(gyaim)
-        // sqlDict = SQLDict(gyaim)
+        SQLDict(gyaim)
 
         for (i in 0..Gyaim.MAXCANDS - 1) {
             candidates[i] = Candidate("", "", 0)
@@ -83,7 +83,7 @@ class Search(gyaim: Gyaim) {
             //
             // SQLの学習辞書検索
             //
-            val s = SQLDict.match(pat, LocalDict.exactMode)
+            val s = SQLDict.search(pat, LocalDict.exactMode)
             for (k in s.indices) {
                 addCandidateWithLevel(s[k][0], s[k][1], -50 + k)
             }
@@ -102,8 +102,8 @@ class Search(gyaim: Gyaim) {
             if (!searchTask.isCancelled) {
                 // Google Suggest または Google日本語入力を利用
                 if (useGoogle) {
-                    Message.message("Gyaim", "isConnected() = " + gyaim!!.isConnected!!)
-                    if (gyaim!!.isConnected!!) {
+                    Message.message("Gyaim", "isConnected() = " + gyaim!!.isConnected())
+                    if (gyaim!!.isConnected()) {
                         // 昔はGoogleSuggestを使っていたが制限があるようなのでGoogleIME APIを利用する
                         // String[] suggestions = GoogleSuggest.suggest(word);
                         var suggestions = GoogleIME.convert(Romakana.roma2hiragana(pat))

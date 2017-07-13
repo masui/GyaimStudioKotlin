@@ -181,13 +181,14 @@ class Gyaim : InputMethodService() {
     //
     // メソッドがActivityの中でしか使えないのでここで定義する。
     //
-    val isConnected: Boolean?
-        get() {
-            val connManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val networkInfo = connManager.activeNetworkInfo
-            Message.message("Gyaim", "networkInfo = " + networkInfo!!)
-            return networkInfo.isConnected
-        }
+    //val isConnected: Boolean?
+    //    get() {
+    public fun isConnected(): Boolean {
+        val connManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connManager.activeNetworkInfo
+        Message.message("Gyaim", "networkInfo = " + networkInfo!!)
+        return networkInfo.isConnected
+    }
 
     fun logWord(word: String) {}
 

@@ -51,68 +51,70 @@ internal class DBHelper(context: Context) : SQLiteOpenHelper(context, "learndict
     }
 }
 
-object SQLDict {
-    internal var db: SQLiteDatabase? = null
-
-    fun initWithContext(context: Context) {
-        val helper = DBHelper(context)
+class SQLDict(context: Context) {
+    init {
+        var helper = DBHelper(context)
         db = helper.writableDatabase
     }
 
-    fun add(word: String, pat: String) { // エントリ追加
-        // 最初に全部消す
-        db!!.delete("history", "word = '$word' AND pat = '$pat'", null)
-        val patind = LocalDict.patInd(pat)
-        // SQLite3の日付処理
-        // http://www.tamandua-webtools.net/sqlite3-date.html
-        db!!.execSQL("insert into history(word,pat,patind,date) values ('$word', '$pat', $patind, datetime('now', 'localtime'));")
-    }
+    companion object {
+        internal var db: SQLiteDatabase? = null
 
-    fun limit(max: Int) { // max個までにDBを制限する
-        var max = max
-        val cursor: Cursor
-        var word: String
-        var pat: String
-        cursor = db!!.query("history", arrayOf("word", "pat", "patind", "date"), null, null, null, null, "date desc")
-        val count = cursor.count
-        while (max < count) {
-            cursor.moveToPosition(max)
-            word = cursor.getString(0)
-            pat = cursor.getString(1)
-            //Log.v("SQLite","delete -> " + word);
+        fun add(word: String, pat: String) { // エントリ追加
+            // 最初に全部消す
             db!!.delete("history", "word = '$word' AND pat = '$pat'", null)
-            max++
+            val patind = LocalDict.patInd(pat)
+            // SQLite3の日付処理
+            // http://www.tamandua-webtools.net/sqlite3-date.html
+            db!!.execSQL("insert into history(word,pat,patind,date) values ('$word', '$pat', $patind, datetime('now', 'localtime'));")
         }
-        cursor.close()
-    }
 
-    fun match(pat: String, exactMode: Boolean): Array<Array<String?>> { // 新しいものから検索
-        val words = ArrayList<String>()
-        val wordpats = ArrayList<String>()
-        val pattern = if (exactMode) Pattern.compile("^" + pat) else Pattern.compile("^$pat.*")
-        //Log.v("Gyaim","pattern="+pattern);
-
-        val cursor = db!!.query("history", arrayOf("word", "pat", "date"),
-                "patind = " + LocalDict.patInd(pat), null, null, null, "date desc")
-        var isEof = cursor.moveToFirst()
-        while (isEof) {
-            val word = cursor.getString(0)
-            val wordpat = cursor.getString(1)
-            //Log.v("Gyaim",String.format("word:%s wordpat:%s\r\n", word, wordpat));
-            if (pattern.matcher(wordpat).matches()) {
-                //Log.v("Gyaim/SQLite - match",String.format("word:%s pat:%s\r\n", word, wordpat));
-                words.add(word)
-                wordpats.add(wordpat)
+        fun limit(max: Int) { // max個までにDBを制限する
+            var max = max
+            val cursor: Cursor
+            var word: String
+            var pat: String
+            cursor = db!!.query("history", arrayOf("word", "pat", "patind", "date"), null, null, null, null, "date desc")
+            val count = cursor.count
+            while (max < count) {
+                cursor.moveToPosition(max)
+                word = cursor.getString(0)
+                pat = cursor.getString(1)
+                //Log.v("SQLite","delete -> " + word);
+                db!!.delete("history", "word = '$word' AND pat = '$pat'", null)
+                max++
             }
-            isEof = cursor.moveToNext()
+            cursor.close()
         }
-        cursor.close()
-        //Log.v("Gyaim","length = "+words.size());
-        val res = Array<Array<String?>>(words.size) { arrayOfNulls<String>(2) }
-        for (i in words.indices) {
-            res[i][0] = words[i]
-            res[i][1] = wordpats[i]
+
+        fun search(pat: String, exactMode: Boolean): Array<Array<String?>> { // 新しいものから検索
+            val words = ArrayList<String>()
+            val wordpats = ArrayList<String>()
+            val pattern = if (exactMode) Pattern.compile("^" + pat) else Pattern.compile("^$pat.*")
+            //Log.v("Gyaim","pattern="+pattern);
+
+            val cursor = db!!.query("history", arrayOf("word", "pat", "date"),
+                    "patind = " + LocalDict.patInd(pat), null, null, null, "date desc")
+            var isEof = cursor.moveToFirst()
+            while (isEof) {
+                val word = cursor.getString(0)
+                val wordpat = cursor.getString(1)
+                //Log.v("Gyaim",String.format("word:%s wordpat:%s\r\n", word, wordpat));
+                if (pattern.matcher(wordpat).matches()) {
+                    //Log.v("Gyaim/SQLite - match",String.format("word:%s pat:%s\r\n", word, wordpat));
+                    words.add(word)
+                    wordpats.add(wordpat)
+                }
+                isEof = cursor.moveToNext()
+            }
+            cursor.close()
+            //Log.v("Gyaim","length = "+words.size());
+            val res = Array<Array<String?>>(words.size) { arrayOfNulls<String>(2) }
+            for (i in words.indices) {
+                res[i][0] = words[i]
+                res[i][1] = wordpats[i]
+            }
+            return res
         }
-        return res
     }
 }

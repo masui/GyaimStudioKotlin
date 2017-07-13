@@ -22,7 +22,7 @@ import android.graphics.Typeface
 class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val buttonTextSize = 50
-    private var buttonTextPaint: Paint? = null
+    private var buttonTextPaint: Paint = Paint()
 
     companion object {
         var candText = Array<String?>(Gyaim.MAXCANDS, { "" })
@@ -31,11 +31,11 @@ class CandView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun initGraphics() {
         // 候補ボタンのテキスト色
-        buttonTextPaint = Paint()
-        buttonTextPaint!!.isAntiAlias = true
-        buttonTextPaint!!.textSize = buttonTextSize.toFloat() //  * expand);
-        buttonTextPaint!!.color = 0xff101010.toInt() // 黒
-        buttonTextPaint!!.typeface = Typeface.DEFAULT_BOLD
+        // buttonTextPaint = Paint()
+        buttonTextPaint.isAntiAlias = true
+        buttonTextPaint.textSize = buttonTextSize.toFloat() //  * expand);
+        buttonTextPaint.color = 0xff101010.toInt() // 黒
+        buttonTextPaint.typeface = Typeface.DEFAULT_BOLD
     }
 
     fun drawDefault() {

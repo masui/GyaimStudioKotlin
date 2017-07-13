@@ -1,11 +1,8 @@
 package com.pitecan.gyaim
 
 import android.util.Log
-
 import org.json.*
-
 import java.io.*
-
 import java.net.*;
 
 import org.json.JSONArray
@@ -16,8 +13,8 @@ object GoogleIME {
 
         val maxSuggestions = 20
         val suggestions = Array<String>(maxSuggestions + 1, { "" })
-        var nsuggest = 0
-        var jsonText = "[[\"\",[]]]"
+        var nsuggest: Int //  = 0
+        var jsonText: String //  = "[[\"\",[]]]"
 
         try {
             val url = URL(urlstr)

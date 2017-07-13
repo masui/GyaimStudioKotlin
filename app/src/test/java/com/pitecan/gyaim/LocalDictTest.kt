@@ -20,16 +20,11 @@ import java.io.InputStream
 import java.io.IOException
 
 class LocalDictTest {
-
-    companion object {
-        internal val 単語辞書ファイル = "app/src/main/assets/dict.txt"
-    }
-
     init {
-        val file = File(単語辞書ファイル)
         try {
+            val file = File("app/src/main/assets/dict.txt")
             val inputStream = FileInputStream(file)
-            LocalDict.initWithInputStream(inputStream)
+            LocalDict(inputStream)
         } catch (e: IOException) {
             println("辞書読出し失敗")
             e.printStackTrace()
